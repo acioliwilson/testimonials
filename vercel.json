@@ -8,7 +8,7 @@
  ],
  "routes": [
     {
-      "src": "/testimonials",
+      "src": "/api/v1/testimonials",
       "methods": ["GET", "POST"],
       "dest": "index.js"
     }
