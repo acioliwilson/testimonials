@@ -21,14 +21,50 @@ const testimonialSchema = new mongoose.Schema({
 const Testimonial = mongoose.model('Testimonial', testimonialSchema);
 
 app.get('/api/v1/testimonials', async (req, res) => {
- const testimonials = await Testimonial.find();
- res.json(testimonials);
+    try {
+        const testimonials = await Testimonial.find();
+        res.json(testimonials);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 app.post('/api/v1/testimonials', async (req, res) => {
- const testimonial = new Testimonial(req.body);
- await testimonial.save();
- res.status(201).json(testimonial);
+    try {
+        const testimonial = new Testimonial(req.body);
+        await testimonial.save();
+        res.status(201).json(testimonial);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+app.put('/api/v1/testimonials/:id', async (req, res) => {
+    try {
+        const updatedTestimonial = await Testimonial.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        if (!updatedTestimonial) {
+            return res.status(404).json({ message: 'Testimonial not found' });
+        }
+        res.json(updatedTestimonial);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+app.delete('/api/v1/testimonials/:id', async (req, res) => {
+    try {
+        const deletedTestimonial = await Testimonial.findByIdAndRemove(req.params.id);
+        if (!deletedTestimonial) {
+            return res.status(404).json({ message: 'Testimonial not found' });
+        }
+        res.json({ message: 'Testimonial deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
