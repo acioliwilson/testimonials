@@ -14,6 +14,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 const testimonialSchema = new mongoose.Schema({
  name: String,
  message: String,
+ rating: Number,
+ status: Boolean
 });
 
 const Testimonial = mongoose.model('Testimonial', testimonialSchema);
