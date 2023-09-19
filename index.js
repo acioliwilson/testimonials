@@ -38,9 +38,16 @@ app.get('/api/v1/testimonials', async (req, res) => {
     }
 });
 
-app.options('/api/v1/testimonials', (req, res) => {
+app.options('/api/v1/testimonials', async (req, res) => {
     res.header('Access-Control-Allow-Methods', 'POST');
-    res.status(200).end;
+    res.status(200).end();
+    try {
+        const testimonial = new Testimonial(req.body);
+        await testimonial.save();
+        res.status(201).json(testimonial);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 app.put('/api/v1/testimonials/:id', async (req, res) => {
