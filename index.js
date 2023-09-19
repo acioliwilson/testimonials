@@ -6,30 +6,25 @@ const mongoose = require('mongoose');
 const app = express();
 
 const allowedOrigins = '*';
+
 app.use(cors({
     origin: allowedOrigins,
     methods: 'GET, POST, PUT, DELETE, OPTIONS',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
 }));
-// Configurar o CORS para permitir todas as origens (ou substitua pelo domínio do seu aplicativo Vue.js)
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI, {
- useNewUrlParser: true,
- useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
 const testimonialSchema = new mongoose.Schema({
- name: String,
- message: String,
- rating: Number,
- status: Boolean
+    name: String,
+    message: String,
+    rating: Number,
+    status: Boolean
 });
 
 const Testimonial = mongoose.model('Testimonial', testimonialSchema);
@@ -84,5 +79,5 @@ app.delete('/api/v1/testimonials/:id', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
- console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
