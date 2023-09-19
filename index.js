@@ -48,6 +48,11 @@ app.post('/api/v1/testimonials', async (req, res) => {
     }
 });
 
+app.options('/api/v1/testimonials', (req, res) => {
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.status(200).json({ message: 'All good' });
+});
+
 app.put('/api/v1/testimonials/:id', async (req, res) => {
     try {
         const updatedTestimonial = await Testimonial.findByIdAndUpdate(
