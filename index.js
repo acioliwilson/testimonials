@@ -32,7 +32,7 @@ const testimonialSchema = new mongoose.Schema({
     message: String,
     rating: Number,
     status: Boolean
-});
+}, { timestamps: true });
 
 const Testimonial = mongoose.model('Testimonial', testimonialSchema);
 
