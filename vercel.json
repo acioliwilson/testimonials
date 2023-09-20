@@ -1,21 +1,33 @@
 {
- "version": 2,
- "builds": [
+  "version": 2,
+  "builds": [
     {
       "src": "index.js",
       "use": "@vercel/node"
     }
- ],
- "routes": [
+  ],
+  "routes": [
     {
       "src": "/api/v1/testimonials",
-      "methods": ["GET", "POST"],
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "86400"
+      },
       "dest": "index.js"
     },
     {
-        "src": "/api/v1/testimonials/(.*)",
-        "methods": ["PUT", "DELETE"],
-        "dest": "index.js"
+      "src": "/api/v1/testimonials/(.*)",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "86400"
+      },
+      "dest": "index.js"
     }
- ]
+  ]
 }
